@@ -1,168 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Task App</title>
-    <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
-    crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="/styles.css"/>
-  </head>
-  <body>
-    <div class="container">
-        <!-- Heading -->
-        <div class="heading bg-img">
-          <h1 class="my-5">To Do List App</h1>
-        </div>
-  
-        <!-- BUTTON : Add task Modal pop up button : START -->
-        
-           
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Add Task</h5>
-          <div
-        class="modal fade"
-        id="new-task-modal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="new-task-modal"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="row mb-5">
-              <div class="col">
-                <div class="modal-header">
-                  <h3 class="modal-title">New Task</h3>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-          <form class="needs-validation" novalidate>
-            <div class="form-row">
-              <div class="col-md-6 mb-3">
-                <label for="validationCustom01">Name</label>
-                <input type="text" class="form-control" id="validationCustom01" required>
-                <div class="invalid-feedback">
-                  invalid
-                </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="validationCustom02">Description</label>
-                <input type="text" class="form-control" id="validationCustom02" required>
-                <div class="invalid-feedback">
-                  invalid
-                </div>
-              </div>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>My task planner</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
+</head>
+
+<body class='snippet-body'>
+    <!-- Modal -->
+    <div class="modal fade" id="taskForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="taskFormLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="newTaskForm" novalidate>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="taskFormLabel">New Task</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="newTaskNameInput" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="newTaskNameInput" aria-describedby="inputGroupPrepend2" required />
+                            <div class="valid-feedback">Task name is valid!</div>
+                            <div class="invalid-feedback">
+                                Minimum 5 characters required!
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newTaskDescription" class="form-label">Description</label>
+                            <textarea type="text" class="form-control" id="newTaskDescription" aria-describedby="inputGroupPrepend2" required></textarea>
+                            <div class="valid-feedback">Task description is valid!</div>
+                            <div class="invalid-feedback">
+                                Minimum 5 characters required!
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newTaskAssignedTo" class="form-label">AssignedTo</label>
+                            <input type="text" class="form-control" id="newTaskAssignedTo" aria-describedby="inputGroupPrepend2" required />
+                            <div class="valid-feedback">Assigned to is valid!</div>
+                            <div class="invalid-feedback">
+                                Minimum 5 characters required!
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Due Date</label>
+                            <input type="date" class="form-control" id="newTaskDueDate" aria-describedby="inputGroupPrepend2" required />
+                            <div class="valid-feedback">Task due date is valid!</div>
+                            <div class="invalid-feedback">
+                                Date cannot be empty!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-row">
-              <div class="col-md-6 mb-3">
-                <label for="validationCustom03">Assing To</label>
-                <input type="text" class="form-control" id="validationCustom03" required>
-                <div class="invalid-feedback">
-                  invalid
-                </div>
-              </div>
-              <div class="col-md-3 mb-3">
-                <label for="validationCustom05">Due Date</label>
-                <input type="Date" class="form-control" id="validationCustom05" required>
-                <div class="invalid-feedback">
-                   invalid .
-                </div>
-              </div>
-            </div>
-              <div class="col-md-3 mb-3">
-                <label for="validationCustom04">Status</label>
-                <select class="custom-select" id="validationCustom04" required>
-                  <option selected disabled value="">C</option>
-                  <option>...</option>
-                </select>
-                <div class="invalid-feedback">
-                  invalid .
-                </div>
-              </div>
-            <button class="btn btn-primary" type="submit">Submit form</button>
-          </form>
         </div>
     </div>
-  </div>
-</div>
-</div>
-</div>
-          <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action active">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
-                <small>3 days ago</small>
-              </div>
-              <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-              <small>Donec id elit non mi porta.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
-                <small class="text-muted">3 days ago</small>
-              </div>
-              <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-              <small class="text-muted">Donec id elit non mi porta.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
-                <small class="text-muted">3 days ago</small>
-              </div>
-              <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-              <small class="text-muted">Donec id elit non mi porta.</small>
-            </a>
-          </div>
 
-        
+    <div class="row d-flex justify-content-center container">
+        <div class="col-md-12">
+            <h3>My task planner - <span id="currentDate"></span></h3>
         </div>
-      </div>
-    
-      <script>
-      // Example starter JavaScript for disabling form submissions if there are invalid fields
-      (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.getElementsByClassName('needs-validation');
-          // Loop over them and prevent submission
-          var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-              if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-            }, false);
-          });
-        }, false);
-      })();
-      </script>
-   
-    <!--bootstrap script -->
-    <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-    crossorigin="anonymous"
-  ></script>
-  </body>
+
+        <div class="col-md-12">
+            <div class="card-hover-shadow-2x mb-3 card">
+                <div class="card-header-tab card-header">
+                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                        <i class="fa fa-tasks"></i>&nbsp;Task Lists
+                    </div>
+                </div>
+                <div style="position: static;" class="ps ps--active-y">
+                    <div class="ps-content">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div class="widget-content p-0">
+                                    <div class="widget-content-wrapper">
+                                        <div class="widget-content-left mr-2">
+                                            <div class="custom-checkbox custom-control">
+                                                <input class="input" type="checkbox">
+                                                <label class="label">&nbsp;</label>
+                                            </div>
+                                        </div>
+                                        <div class="widget-content-left">
+                                            <div class="widget-heading">
+                                                Design your App Wireframes
+                                            </div>
+                                            <div class="widget-description">It is always a good practice to plan and
+                                                design first before you start coding. The objective of this task is to
+                                                create the Task Planner app wireframes!</div>
+                                            <div class="widget-subheading"><i>Assigned to: Jennifer Hoang</i></div>
+                                            <div class="widget-subheading"><i>Due date: 2022-01-28</i></div>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <div class="badge bg-success">Completed</div>
+                                            <button class="border-0 btn-transition btn btn-outline-success"
+                                                data-bs-toggle="modal" data-bs-target="#taskForm">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="widget-content p-0">
+                                    <div class="widget-content-wrapper">
+                                        <div class="widget-content-left mr-2">
+                                            <div class="custom-checkbox custom-control">
+                                                <input class="input" type="checkbox">
+                                                <label class="label">&nbsp;</label>
+                                            </div>
+                                        </div>
+                                        <div class="widget-content-left">
+                                            <div class="widget-heading">
+                                                Implement your Wireframes using Bootstrap
+                                            </div>
+                                            <div class="widget-description">
+                                                Implement the basic HTML structure of your Wireframes design.
+                                            </div>
+                                            <div class="widget-subheading"><i>Assigned to: Jennifer Hoang</i></div>
+                                            <div class="widget-subheading"><i>Due date: 2022-01-28</i></div>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <div class="badge bg-success">Completed</div>
+                                            <button class="border-0 btn-transition btn btn-outline-success"
+                                                data-bs-toggle="modal" data-bs-target="#taskForm">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="widget-content p-0">
+                                    <div class="widget-content-wrapper">
+                                        <div class="widget-content-left mr-2">
+                                            <div class="custom-checkbox custom-control">
+                                                <input class="input" type="checkbox">
+                                                <label class="label">&nbsp;</label>
+                                            </div>
+                                        </div>
+                                        <div class="widget-content-left">
+                                            <div class="widget-heading">
+                                                Create a Task Card layout and a Task List component
+                                            </div>
+                                            <div class="widget-description">Implement the card layout bootstrap component that contains the task information:</div>
+                                            <div class="widget-subheading"><i>Assigned to: Jennifer Hoang</i></div>
+                                            <div class="widget-subheading"><i>Due date: 2022-01-28</i></div>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <div class="badge bg-success">Completed</div>
+                                            <button class="border-0 btn-transition btn btn-outline-success"
+                                                data-bs-toggle="modal" data-bs-target="#taskForm">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="widget-content p-0">
+                                    <div class="widget-content-wrapper">
+                                        <div class="widget-content-left mr-2">
+                                            <div class="custom-checkbox custom-control">
+                                                <input class="input" type="checkbox">
+                                                <label class="label">&nbsp;</label>
+                                            </div>
+                                        </div>
+                                        <div class="widget-content-left">
+                                            <div class="widget-heading">
+                                                Task Form Inputs Validation
+                                            </div>
+                                            <div class="widget-description">Implement a form that captures the fields required to create a task.</div>
+                                            <div class="widget-subheading"><i>Assigned to: Jennifer Hoang</i></div>
+                                            <div class="widget-subheading"><i>Due date: 2022-01-28</i></div>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <div class="badge bg-info">In Progress</div>
+                                            <button class="border-0 btn-transition btn btn-outline-success"
+                                                data-bs-toggle="modal" data-bs-target="#taskForm">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="widget-content p-0">
+                                    <div class="widget-content-wrapper">
+                                        <div class="widget-content-left mr-2">
+                                            <div class="custom-checkbox custom-control">
+                                                <input class="input" type="checkbox">
+                                                <label class="label">&nbsp;</label>
+                                            </div>
+                                        </div>
+                                        <div class="widget-content-left">
+                                            <div class="widget-heading">
+                                                Adding Tasks
+                                            </div>
+                                            <div class="widget-description">For this task, we'll be adding the current date to be displayed on our To Do application using JavaScript's built-in Date object.</div>
+                                            <div class="widget-subheading"><i>Assigned to: Jennifer Hoang</i></div>
+                                            <div class="widget-subheading"><i>Due date: 2022-01-28</i></div>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <div class="badge bg-primary">Pending</div>
+                                            <button class="border-0 btn-transition btn btn-outline-success"
+                                                data-bs-toggle="modal" data-bs-target="#taskForm">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer mx-auto justify-content-right">
+                <button class="btn btn-primary btn-sm float-right" id="addTask" data-bs-toggle="modal"
+                    data-bs-target="#taskForm">Add New Task</button>
+                <button class="btn btn-danger btn-sm float-right" id="deleteTasks">Delete Tasks</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include required Javascripts library -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+
+    <!-- Include required custom Javascripts file -->
+    <script src="./js/taskManager.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+
 </html>
