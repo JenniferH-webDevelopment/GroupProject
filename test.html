@@ -25,7 +25,7 @@
         <div class="heading bg-img">
           <h1 class="my-5">To Do List App</h1>
         </div>
-  
+
         <!-- BUTTON : Add task Modal pop up button : START -->
         <div class="row mb-5">
           <button
@@ -39,53 +39,88 @@
           </button>
         </div>
         <!-- BUTTON : Add task Modal pop up button : END -->
+        <form class="needs-validation" novalidate>
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="validationCustom01">Name</label>
+              <input type="text" class="form-control" id="validationCustom01" required>
+              <div class="invalid-feedback">
+                invalid
+              </div>
+              <div class="valid-feedback">valid</div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="validationCustom02">Description</label>
+              <input type="text" class="form-control" id="validationCustom02" required>
+              <div class="invalid-feedback">
+                <span>invalid</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="validationCustom03">Assing To</label>
+              <input type="text" class="form-control" id="validationCustom03" required>
+              <div class="invalid-feedback">
+                invalid
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="validationCustom05">Due Date</label>
+              <input type="Date" class="form-control" id="validationCustom05" required>
+              <div class="invalid-feedback">
+                 invalid .
+              </div>
+            </div>
+          </div>
+            <div class="col-md-3 mb-3">
+              <label for="validationCustom04">Status</label>
+              <select class="custom-select" id="validationCustom04" required>
+                <option selected disabled value="">C</option>
+                <option>...</option>
+              </select>
+              <div class="invalid-feedback">
+                invalid .
+              </div>
+            </div>
+          <button class="btn btn-primary" type="submit">Submit form</button>
+        </form>
+        <!--Task List -->
         <div class="list-group">
             <a href="#" class="list-group-item list-group-item-action active">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Task Name</h5>
-                <small>Status Pending</small>
+                <h5 class="mb-1">Name: Prepare Breakfast</h5>
+                <small>Status: Pending</small>
               </div>
-              <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-              <small>Donec id elit non mi porta.</small>
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Assigned to: Suja</h5>
+                <small>Due Date: 28/01/2022</small>
+              </div>
+              <p class="mb-1">Description: Cook eggs</p>
+
               <a href="#" class="btn btn-primary">Edit</a>
               <a href="#" class="btn btn-primary">Delete</a>
             </a>
-            <a href="#" class="list-group-item list-group-item-action">
+            <a href="#" class="list-group-item list-group-item-action active">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
-                <small class="text-muted">3 days ago</small>
+                <h5 class="mb-1">Name: Prepare Breakfast</h5>
+                <small>Status: Pending</small>
               </div>
-              <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-              <small class="text-muted">Donec id elit non mi porta.</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
-                <small class="text-muted">3 days ago</small>
+                <h5 class="mb-1">Assigned to: Suja</h5>
+                <small>Due Date: 28/01/2022</small>
               </div>
-              <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-              <small class="text-muted">Donec id elit non mi porta.</small>
+              <p class="mb-1">Description: Cook eggs</p>
+
+              <a href="#" class="btn btn-primary">Edit</a>
+              <a href="#" class="btn btn-primary">Delete</a>
             </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">List group item heading</h5>
-                  <small class="text-muted">3 days ago</small>
-                </div>
-                <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                <small class="text-muted">Donec id elit non mi porta.</small>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">List group item heading</h5>
-                  <small class="text-muted">3 days ago</small>
-                </div>
-                <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                <small class="text-muted">Donec id elit non mi porta.</small>
-              </a>
           </div>
 
-        
+
         </div>
       </div>
+      <script src="./js/index.js"></script>
   </body>
-    
+
+
