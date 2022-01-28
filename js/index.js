@@ -2,7 +2,7 @@ const taskManager = new TaskManager(0);
 // taskManager.addTask('test', 'test', 'test', 'test', 'test');
 // console.log(taskManager.tasks);
 
-const form = document.querySelector("#new-task-form");
+const newTaskForm = document.querySelector("#newTaskForm");
 const dateElement = document.querySelector("#date-element");
 const modalTaskForm = document.getElementById('taskForm');
 let today = new Date();
@@ -16,7 +16,7 @@ modalTaskForm.addEventListener('shown.bs.modal', function () {
     newTaskNameInput.focus();
 });
 
-form.addEventListener('submit', (event) => {
+newTaskForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
     if (!this.validFormFieldInput()) {
