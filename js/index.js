@@ -10,7 +10,8 @@ const [day, month, year] = [today.getDate(), today.getMonth()+1, today.getFullYe
 console.log(today);
 let dateString = `Current Date: ${day} / ${month} / ${year}`;
 dateElement.innerHTML = dateString;
-
+const taskHtml = createTaskHtml(testName, testDescription, testAssignedTo, testDueDate, testStatus);
+console.log(taskHtml);
 modalTaskForm.addEventListener('shown.bs.modal', function () {
     newTaskNameInput.focus();
 });
@@ -35,10 +36,12 @@ newTaskForm.addEventListener('submit', (event) => {
     console.log(taskManager.tasks);
 
     //reset form value
-    this.clearFormFields();
-
+    // https://www.w3schools.com/jsref/met_form_reset.asp
+    clearFormFields();
+    taskManager.render();
     //hide modal form
     $('#taskForm').modal('hide');
+
 });
 
 function clearFormFields() {
