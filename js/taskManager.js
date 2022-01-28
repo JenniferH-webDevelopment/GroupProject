@@ -4,14 +4,14 @@ class TaskManager {
       this.currentId = currentId;
     };
 
-    addTask(name, description, assignedTo, dueDate, status) {
+    addTask(formDataValue) {
         console.log('Adding new task');
         const task = {
-            name : name,
-            description : description,
-            assignedTo: assignedTo,
-            dueDate: dueDate,
-            status: status,
+            name : formDataValue.taskName,
+            description : formDataValue.taskDescription,
+            assignedTo: formDataValue.taskAssignedTo,
+            dueDate: formDataValue.taskDueDate,
+            status: 'PENDING',
             currentId: this.currentId++,
         };
         this.tasks.push(task);

@@ -6,21 +6,22 @@ body {
    line-height: 1.5;
    color: #495057;
    text-align: left;
-   background-color: #fff
+   background-color: rgb(187, 179, 179);
+   /* background-image: url('./Lined-Paper-Background-Tikz.png'); */
 }
 
 i {
-   font-style: italic
+   font-style: italic;
 }
 
 .container {
-   margin-top: 100px
+   margin-top: 100px;
 }
 
 .card {
    box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03), 0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03), 0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05), 0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
    border-width: 0;
-   transition: all .2s
+   transition: all .2s;
 }
 
 .card-header:first-child {

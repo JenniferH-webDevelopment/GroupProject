@@ -1,18 +1,15 @@
-const taskManager = new TaskManager();
-// console.log(taskManager.tasks);
+const taskManager = new TaskManager(0);
 // taskManager.addTask('test', 'test', 'test', 'test', 'test');
-console.log(taskManager.tasks);
+// console.log(taskManager.tasks);
 
 const newTaskForm = document.querySelector('#newTaskForm');
-const dateElement = document.querySelector('#currentDate');
+const dateElement = document.querySelector("#date-element");
 const modalTaskForm = document.getElementById('taskForm');
-var currentDate = new Date();
-console.log(currentDate);
-// var date = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate();
-var date = currentDate.toLocaleDateString();
-// console.log(currentDate);
-// map current date value to span DOM
-document.getElementById('currentDate').innerHTML = date;
+let today = new Date();
+const [day, month, year] = [today.getDate(), today.getMonth()+1, today.getFullYear()];
+console.log(today);
+let dateString = `Current Date: ${day} / ${month} / ${year}`;
+dateElement.innerHTML = dateString;
 
 modalTaskForm.addEventListener('shown.bs.modal', function () {
     newTaskNameInput.focus();
@@ -27,14 +24,27 @@ newTaskForm.addEventListener('submit', (event) => {
         newTaskForm.classList.add('was-validated');
     }
 
+    // Get all the form values using FormData https://developer.mozilla.org/en-US/docs/Web/API/FormData/delete
+    // Reference https://www.learnwithjason.dev/blog/get-form-values-as-json
+    const data = new FormData(event.target);
+    const formDataValue = Object.fromEntries(data.entries());
+    console.log(formDataValue);
+
     //add new task using Task Manager
-    taskManager.addTask('test', 'test', 'test', 'test', 'test');
+    taskManager.addTask(formDataValue);
     console.log(taskManager.tasks);
+
     //reset form value
+    this.clearFormFields();
 
     //hide modal form
     $('#taskForm').modal('hide');
 });
+
+function clearFormFields() {
+    let inputs = document.querySelectorAll("input");
+    inputs.forEach((input) => (input.value = ""));
+}
 
 function validFormFieldInput() {
     const newTaskNameInput = document.querySelector('#newTaskNameInput');

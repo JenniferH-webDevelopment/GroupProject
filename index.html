@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/styles.css" />
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
 </head>
-
+<!-- https://bbbootstrap.com/snippets/todo-task-list-badges-71324362 -->
 <body class='snippet-body'>
     <!-- Modal -->
     <div class="modal fade" id="taskForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -23,7 +23,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="newTaskNameInput" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="newTaskNameInput" aria-describedby="inputGroupPrepend2" required />
+                            <input type="text" name="taskName" class="form-control" id="newTaskNameInput" aria-describedby="inputGroupPrepend2" required />
                             <div class="valid-feedback">Task name is valid!</div>
                             <div class="invalid-feedback">
                                 Minimum 5 characters required!
@@ -31,7 +31,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="newTaskDescription" class="form-label">Description</label>
-                            <textarea type="text" class="form-control" id="newTaskDescription" aria-describedby="inputGroupPrepend2" required></textarea>
+                            <textarea type="text" name="taskDescription" class="form-control" id="newTaskDescription" aria-describedby="inputGroupPrepend2" required></textarea>
                             <div class="valid-feedback">Task description is valid!</div>
                             <div class="invalid-feedback">
                                 Minimum 5 characters required!
@@ -39,15 +39,15 @@
                         </div>
                         <div class="mb-3">
                             <label for="newTaskAssignedTo" class="form-label">AssignedTo</label>
-                            <input type="text" class="form-control" id="newTaskAssignedTo" aria-describedby="inputGroupPrepend2" required />
+                            <input type="text" name="taskAssignedTo" class="form-control" id="newTaskAssignedTo" aria-describedby="inputGroupPrepend2" required />
                             <div class="valid-feedback">Assigned to is valid!</div>
                             <div class="invalid-feedback">
                                 Minimum 5 characters required!
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="date" class="form-label">Due Date</label>
-                            <input type="date" class="form-control" id="newTaskDueDate" aria-describedby="inputGroupPrepend2" required />
+                            <label for="newTaskDueDate" class="form-label">Due Date</label>
+                            <input type="date" name="taskDueDate" class="form-control" id="newTaskDueDate" aria-describedby="inputGroupPrepend2" required />
                             <div class="valid-feedback">Task due date is valid!</div>
                             <div class="invalid-feedback">
                                 Date cannot be empty!
@@ -65,7 +65,8 @@
 
     <div class="row d-flex justify-content-center container">
         <div class="col-md-12">
-            <h3>My task planner - <span id="currentDate"></span></h3>
+            <h3>My task planner</h3>
+            <span id="date-element"></span>
         </div>
 
         <div class="col-md-12">
