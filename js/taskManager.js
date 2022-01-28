@@ -1,4 +1,4 @@
-const createTaskHtml = (name, description, assignedTo, dueDate, status) => {
+const createTaskHtml = (task) => {
     const html = `
     <li class="list-group-item">
     <div class="widget-content p-0">
@@ -48,7 +48,7 @@ class TaskManager {
     };
 };
 // Create the render method
-const render = () {
+const render = () => {
     let tasksHtmlList = [];
     // Loop over our tasks and create the html, storing it in the array
     for (let i = 0; i < this.tasks.length; i++) {
@@ -65,11 +65,11 @@ const render = () {
         task.description,
         task.assignedTo,
         formattedDate,
-        task.status
+        task.status,
       );
       // push the taskHtml into the tasksHtmlList array.
       tasksHtmlList.push(taskHtml);
-    }
+    };
 
     // Create the tasksHtml by joining each item in the tasksHtmlList
     // with a new line in between each item.
@@ -79,4 +79,3 @@ const render = () {
     const tasksList = document.querySelector("#task-list");
     tasksList.innerHTML = tasksHtml;
   }
-}
