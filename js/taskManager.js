@@ -1,6 +1,6 @@
-const createTaskHtml = (name, description, assignedTo, dueDate, status) => {
+const createTaskHtml = (id, name, description, assignedTo, dueDate, status) => {
     const html = `
-    <li class="list-group-item">
+    <li class="list-group-item" data-task-id="${id}">
     <div class="widget-content p-0">
         <div class="widget-content-wrapper">
             <div class="widget-content-left mr-2">
@@ -16,10 +16,13 @@ const createTaskHtml = (name, description, assignedTo, dueDate, status) => {
                 <div class="widget-subheading"><i>${dueDate}</i></div>
             </div>
             <div class="widget-content-right">
-                <div class="badge bg-success">${status}</div>
+                <div class="badge ${(status === 'Done') ? 'bg-success' : 'bg-info'}">${status}</div>
                 <button class="border-0 btn-transition btn btn-outline-success"
                     data-bs-toggle="modal" data-bs-target="#taskForm">
                     <i class="fa fa-pencil"></i>
+                </button>
+                <button class="border-0 btn-transition btn btn-outline-success ${(status === 'Done') ? 'invisible' : 'visible'}">
+                    <i class="fa fa-check-circle done-button"></i>
                 </button>
             </div>
         </div>
@@ -61,6 +64,7 @@ class TaskManager {
                 date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
             // Create a taskHtml variable to store the HTML of the current task, by calling the createTaskHtml function and using the properties of the current task, as well as the new formattedDate variable for the parameters.
             const taskHtml = createTaskHtml(
+                task.currentId,
                 task.name,
                 task.description,
                 task.assignedTo,
@@ -77,8 +81,23 @@ class TaskManager {
 
         // Set the inner html of the tasksList on the page
         const tasksList = document.querySelector("#task-list");
-        // console.log()
-        tasksList.innerHTML += tasksHtml;
-        // tasksList.insertAdjacentHTML('beforeend', tasksHtml);
+        tasksList.innerHTML = tasksHtml;
+    }
+
+    getTaskById = (taskId) => {
+        // Create a variable to store the found task
+        let foundTask;
+        // Loop over the tasks and find the task with the id passed as a parameter
+        for (let i = 0; i < this.tasks.length; i++) {
+            // Get the current task in the loop
+            const task = this.tasks[i];
+            // Check if its the right task by comparing the task's id to the id passed as a parameter
+            if (task.currentId === taskId) {
+                // Store the task in the foundTask variable
+                foundTask = task;
+            }
+        }
+        // Return the found task
+        return foundTask;
     }
 };

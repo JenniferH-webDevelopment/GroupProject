@@ -23,47 +23,24 @@ newTaskForm.addEventListener('submit', (event) => {
         event.preventDefault();
         event.stopPropagation();
         newTaskForm.classList.add('was-validated');
+    } else {
+        // Get all the form values using FormData https://developer.mozilla.org/en-US/docs/Web/API/FormData/delete
+        // Reference https://www.learnwithjason.dev/blog/get-form-values-as-json
+        const data = new FormData(event.target);
+        const formDataValue = Object.fromEntries(data.entries());
+        console.log(formDataValue);
+
+        //add new task using Task Manager
+        taskManager.addTask(formDataValue);
+        console.log(taskManager.tasks);
+
+        //reset form value
+        clearFormFields();
+        taskManager.render();
+        //hide modal form
+        $('#taskForm').modal('hide');
     }
-
-    // Get all the form values using FormData https://developer.mozilla.org/en-US/docs/Web/API/FormData/delete
-    // Reference https://www.learnwithjason.dev/blog/get-form-values-as-json
-    const data = new FormData(event.target);
-    const formDataValue = Object.fromEntries(data.entries());
-    console.log(formDataValue);
-
-    //add new task using Task Manager
-    taskManager.addTask(formDataValue);
-    console.log(taskManager.tasks);
-
-    //reset form value
-    clearFormFields();
-    taskManager.render();
-    //hide modal form
-    $('#taskForm').modal('hide');
-
 });
-// Use querySelector to select the Task List and store it in a variable.
-const taskList = document.querySelector("#task-list");
-// Add an Event Listener to the Task List, listening for the 'click' event.
-taskList.addEventListener("click", (event) => {
-    // Using the event.target, using an if statement, check if the target's classList contains the class we added to the button, 'done-button'. If the classList contains 'done-button', we know we clicked on the "Done" button from earlier!
-    if (event.target.classList.contains("done-button")) {
-    //Use DOM Traversal, such as the parentElement property of the target (Node.parentElement) to traverse the DOM and find the task's element. (we want to find <li>). Store the <li> in a parentTask variable.
-      const parentTask =
-        event.target.parentElement.parentElement.parentElement.parentElement;
-      console.log(parentTask);
-      // Get the taskId of the parent Task and turn it into a number.
-      const taskId = Number(parentTask.dataset.taskId);
-      // Get the task from the TaskManager using the taskId
-      const task = taskManager.getTaskById(taskId);
-      // Update the task status to 'DONE'
-      task.status = "Done";
-
-      // Render the tasks
-      taskManager.render();
-    }
-  });
-
 
 function clearFormFields() {
     let inputs = document.querySelectorAll("input");
@@ -98,3 +75,24 @@ function validFormFieldInput() {
 
     return true;
 }
+
+// Use querySelector to select the Task List and store it in a variable.
+const taskList = document.querySelector("#task-list");
+// Add an Event Listener to the Task List, listening for the 'click' event.
+taskList.addEventListener('click', (event) => { // "event" here is the event parameter
+    console.log(event.target.classList);
+    if (event.target.classList.contains("done-button")) {
+        //Use DOM Traversal, such as the parentElement property of the target (Node.parentElement) to traverse the DOM and find the task's element. (we want to find <li>). Store the <li> in a parentTask variable.
+        const parentTask = event.target.parentElement.parentElement.parentElement.parentElement.parentElement;
+        console.log(parentTask);
+        const taskId = Number(parentTask.dataset.taskId);
+        console.log(taskId);
+        // Get the task from the TaskManager using the taskId
+        const task = taskManager.getTaskById(taskId);
+        // Update the task status to 'DONE'
+        task.status = "Done";
+
+        // Render the tasks
+        taskManager.render();
+    }
+});
