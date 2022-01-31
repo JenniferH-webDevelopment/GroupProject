@@ -1,17 +1,22 @@
 const taskManager = new TaskManager(0);
-// taskManager.addTask('test', 'test', 'test', 'test', 'test');
-// console.log(taskManager.tasks);
+
+// Load the tasks from localStorage
+taskManager.load();
+
+// Render the loaded tasks to the page
+taskManager.render();
 
 const newTaskForm = document.querySelector("#newTaskForm");
 const dateElement = document.querySelector("#date-element");
 const modalTaskForm = document.getElementById('taskForm');
 let today = new Date();
-const [day, month, year] = [today.getDate(), today.getMonth()+1, today.getFullYear()];
+const [day, month, year] = [today.getDate(), today.getMonth() + 1, today.getFullYear()];
 console.log(today);
 let dateString = `Current Date: ${day} / ${month} / ${year}`;
 dateElement.innerHTML = dateString;
-// const taskHtml = createTaskHtml(testName, testDescription, testAssignedTo, testDueDate, testStatus);
-// console.log(taskHtml);
+let dueDateField = document.querySelector("#newTaskDueDate");
+dueDateField.setAttribute('min', year + '-' + month + '-' + day);
+
 modalTaskForm.addEventListener('shown.bs.modal', function () {
     newTaskNameInput.focus();
 });
@@ -19,27 +24,36 @@ modalTaskForm.addEventListener('shown.bs.modal', function () {
 newTaskForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    if (!this.validFormFieldInput()) {
+    // if (!this.validFormFieldInput()) {
+    if (!newTaskForm.checkValidity()) {
         event.preventDefault();
         event.stopPropagation();
         newTaskForm.classList.add('was-validated');
-    } else {
-        // Get all the form values using FormData https://developer.mozilla.org/en-US/docs/Web/API/FormData/delete
-        // Reference https://www.learnwithjason.dev/blog/get-form-values-as-json
-        const data = new FormData(event.target);
-        const formDataValue = Object.fromEntries(data.entries());
-        console.log(formDataValue);
-
-        //add new task using Task Manager
-        taskManager.addTask(formDataValue);
-        console.log(taskManager.tasks);
-
-        //reset form value
-        clearFormFields();
-        taskManager.render();
-        //hide modal form
-        $('#taskForm').modal('hide');
+        return;
     }
+
+    newTaskForm.classList.remove('was-validated');
+    // Get all the form values using FormData https://developer.mozilla.org/en-US/docs/Web/API/FormData/delete
+    // Reference https://www.learnwithjason.dev/blog/get-form-values-as-json
+    const data = new FormData(event.target);
+    const formDataValue = Object.fromEntries(data.entries());
+    console.log(formDataValue);
+
+    //add new task using Task Manager
+    taskManager.addTask(formDataValue);
+    // console.log(taskManager.tasks);
+
+    //reset form value
+    clearFormFields();
+
+    //save task to local storage
+    taskManager.save();
+
+    //render the task
+    taskManager.render();
+
+    //hide modal form
+    $('#taskForm').modal('hide');
 });
 
 function clearFormFields() {
@@ -59,17 +73,11 @@ function validFormFieldInput() {
 
     if (newTaskNameInput.value.length <= 5) {
         return false;
-    }
-
-    else if (newTaskAssignedTo.value.length <= 5) {
+    } else if (newTaskAssignedTo.value.length <= 5) {
         return false;
-    }
-
-    else if (newTaskDescription.value.length <= 5) {
+    } else if (newTaskDescription.value.length <= 5) {
         return false;
-    }
-
-    else if (newTaskDueDate.value.length <= 0) {
+    } else if (newTaskDueDate.value.length <= 0) {
         return false;
     }
 
@@ -84,15 +92,65 @@ taskList.addEventListener('click', (event) => { // "event" here is the event par
     if (event.target.classList.contains("done-button")) {
         //Use DOM Traversal, such as the parentElement property of the target (Node.parentElement) to traverse the DOM and find the task's element. (we want to find <li>). Store the <li> in a parentTask variable.
         const parentTask = event.target.parentElement.parentElement.parentElement.parentElement.parentElement;
-        console.log(parentTask);
+        // console.log(parentTask);
+
         const taskId = Number(parentTask.dataset.taskId);
-        console.log(taskId);
+        // console.log(taskId);
+
         // Get the task from the TaskManager using the taskId
         const task = taskManager.getTaskById(taskId);
         // Update the task status to 'DONE'
         task.status = "Done";
 
+        // Save the task to local storage
+        taskManager.save();
+
         // Render the tasks
         taskManager.render();
     }
+
+    // Check if a "Delete" button was clicked
+    if (event.target.classList.contains("delete-button")) {
+        event.preventDefault();
+
+        let choice = confirm(event.target.getAttribute('data-confirm'));
+
+        if (choice) {
+            // Get the parent Task
+            const parentTask =
+                event.target.parentElement.parentElement.parentElement.parentElement.parentElement;
+
+            // Get the taskId of the parent Task.
+            const taskId = Number(parentTask.dataset.taskId);
+
+            // Delete the task
+            taskManager.deleteTask(taskId);
+
+            // Save the tasks to localStorage
+            taskManager.save();
+        }
+
+        // Render the tasks
+        taskManager.render();
+    }
+
+    // if (event.target.classList.contains("edit-button")) {
+    //     //Use DOM Traversal, such as the parentElement property of the target (Node.parentElement) to traverse the DOM and find the task's element. (we want to find <li>). Store the <li> in a parentTask variable.
+    //     const parentTask = event.target.parentElement.parentElement.parentElement.parentElement.parentElement;
+    //     const taskId = Number(parentTask.dataset.taskId);
+
+    //     // Get the task from the TaskManager using the taskId
+    //     const task = taskManager.getTaskById(taskId);
+
+    //     // Prepop the form fields with value from the task
+    //     console.log(parentTask);
+    //     let newTaskNameInput = document.querySelector('#newTaskNameInput');
+    //     let newTaskDescription = document.querySelector('#newTaskDescription');
+    //     let newTaskAssignedTo = document.querySelector('#newTaskAssignedTo');
+    //     let newTaskDueDate = document.querySelector('#newTaskDueDate');
+    //     newTaskNameInput.value = task.name;
+    //     newTaskDescription.value = task.description;
+    //     newTaskAssignedTo.value = task.assignedTo;
+    //     newTaskDueDate.value = task.dueDate;
+    // }
 });

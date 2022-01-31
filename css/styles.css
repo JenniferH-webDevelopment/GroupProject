@@ -6,7 +6,7 @@ body {
    line-height: 1.5;
    color: #495057;
    text-align: left;
-   background-color: rgb(187, 179, 179);
+   background-color: rgb(210, 237, 238);
    /* background-image: url('./Lined-Paper-Background-Tikz.png'); */
 }
 
@@ -174,4 +174,9 @@ i {
 
 .card-footer {
    background-color: #fff
+}
+
+.task-title {
+   /* background-color: rgb(0, 0, 0); */
+   color: #000;
 }

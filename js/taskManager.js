@@ -3,26 +3,19 @@ const createTaskHtml = (id, name, description, assignedTo, dueDate, status) => {
     <li class="list-group-item" data-task-id="${id}">
     <div class="widget-content p-0">
         <div class="widget-content-wrapper">
-            <div class="widget-content-left mr-2">
-                <div class="custom-checkbox custom-control">
-                    <input class="input" type="checkbox">
-                    <label class="label">&nbsp;</label>
-                </div>
-            </div>
             <div class="widget-content-left">
-                <div class="widget-heading">${name}</div>
-                <div class="widget-description">${description}</div>
-                <div class="widget-subheading"><i>${assignedTo}</i></div>
-                <div class="widget-subheading"><i>${dueDate}</i></div>
+                <div class="widget-heading">Name: ${name}</div>
+                <div class="widget-description">Description: ${description}</div>
+                <div class="widget-subheading">Assigned to: <i>${assignedTo}</i></div>
+                <div class="widget-subheading">Due date: <i>${dueDate}</i></div>
             </div>
             <div class="widget-content-right">
                 <div class="badge ${(status === 'Done') ? 'bg-success' : 'bg-info'}">${status}</div>
-                <button class="border-0 btn-transition btn btn-outline-success"
-                    data-bs-toggle="modal" data-bs-target="#taskForm">
-                    <i class="fa fa-pencil"></i>
-                </button>
                 <button class="border-0 btn-transition btn btn-outline-success ${(status === 'Done') ? 'invisible' : 'visible'}">
                     <i class="fa fa-check-circle done-button"></i>
+                </button>
+                <button class="border-0 btn-transition btn btn-outline-success">
+                    <i class="fa fa-trash delete-button" data-confirm="Are you sure to delete this task?"></i>
                 </button>
             </div>
         </div>
@@ -45,8 +38,8 @@ class TaskManager {
             description: formDataValue.taskDescription,
             assignedTo: formDataValue.taskAssignedTo,
             dueDate: formDataValue.taskDueDate,
-            status: 'PENDING',
-            currentId: this.currentId++,
+            status: formDataValue.taskStatus,
+            id: this.currentId++,
         };
         this.tasks.push(task);
     };
@@ -64,7 +57,7 @@ class TaskManager {
                 date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
             // Create a taskHtml variable to store the HTML of the current task, by calling the createTaskHtml function and using the properties of the current task, as well as the new formattedDate variable for the parameters.
             const taskHtml = createTaskHtml(
-                task.currentId,
+                task.id,
                 task.name,
                 task.description,
                 task.assignedTo,
@@ -92,12 +85,66 @@ class TaskManager {
             // Get the current task in the loop
             const task = this.tasks[i];
             // Check if its the right task by comparing the task's id to the id passed as a parameter
-            if (task.currentId === taskId) {
+            if (task.id === taskId) {
                 // Store the task in the foundTask variable
                 foundTask = task;
             }
         }
         // Return the found task
         return foundTask;
+    }
+
+    save() {
+        // Create a JSON string of the tasks
+        const tasksJson = JSON.stringify(this.tasks);
+
+        // Store the JSON string in localStorage
+        localStorage.setItem("tasks", tasksJson);
+
+        // Convert the currentId to a string;
+        const currentId = String(this.currentId);
+
+        // Store the currentId in localStorage
+        localStorage.setItem("currentId", currentId);
+    }
+
+    load() {
+        // Check if any tasks are saved in localStorage
+        if (localStorage.getItem("tasks")) {
+            // Get the JSON string of tasks in localStorage
+            const tasksJson = localStorage.getItem("tasks");
+
+            // Convert it to an array and store it in our TaskManager
+            this.tasks = JSON.parse(tasksJson);
+        }
+
+        // Check if the currentId is saved in localStorage
+        if (localStorage.getItem("currentId")) {
+            // Get the currentId string in localStorage
+            const currentId = localStorage.getItem("currentId");
+
+            // Convert the currentId to a number and store it in our TaskManager
+            this.currentId = Number(currentId);
+        }
+    }
+
+    deleteTask(taskId) {
+        // Create an empty array and store it in a new variable, newTasks
+        const newTasks = [];
+
+        // Loop over the tasks
+        for (let i = 0; i < this.tasks.length; i++) {
+            // Get the current task in the loop
+            const task = this.tasks[i];
+
+            // Check if the task id is not the task id passed in as a parameter
+            if (task.id !== taskId) {
+                // Push the task to the newTasks array
+                newTasks.push(task);
+            }
+        }
+
+        // Set this.tasks to newTasks
+        this.tasks = newTasks;
     }
 };

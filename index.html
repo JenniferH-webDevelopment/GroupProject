@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -9,7 +10,8 @@
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
 </head>
 <!-- https://bbbootstrap.com/snippets/todo-task-list-badges-71324362 -->
-<body class='snippet-body'>
+
+<body>
     <!-- Modal -->
     <div class="modal fade" id="taskForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="taskFormLabel" aria-hidden="true">
@@ -23,7 +25,9 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="newTaskNameInput" class="form-label">Name</label>
-                            <input type="text" name="taskName" class="form-control" id="newTaskNameInput" aria-describedby="inputGroupPrepend2" required />
+                            <input type="text" name="taskName" class="form-control" id="newTaskNameInput"
+                                aria-describedby="inputGroupPrepend2" required pattern=".{5,}"
+                                title="5 characters minimum" />
                             <div class="valid-feedback">Task name is valid!</div>
                             <div class="invalid-feedback">
                                 Minimum 5 characters required!
@@ -31,7 +35,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="newTaskDescription" class="form-label">Description</label>
-                            <textarea type="text" name="taskDescription" class="form-control" id="newTaskDescription" aria-describedby="inputGroupPrepend2" required></textarea>
+                            <textarea name="taskDescription" class="form-control" id="newTaskDescription"
+                                aria-describedby="inputGroupPrepend2" required minlength="5"></textarea>
                             <div class="valid-feedback">Task description is valid!</div>
                             <div class="invalid-feedback">
                                 Minimum 5 characters required!
@@ -39,15 +44,31 @@
                         </div>
                         <div class="mb-3">
                             <label for="newTaskAssignedTo" class="form-label">AssignedTo</label>
-                            <input type="text" name="taskAssignedTo" class="form-control" id="newTaskAssignedTo" aria-describedby="inputGroupPrepend2" required />
+                            <input type="text" name="taskAssignedTo" class="form-control" id="newTaskAssignedTo"
+                                aria-describedby="inputGroupPrepend2" required pattern=".{5,}"
+                                title="5 characters minimum" />
                             <div class="valid-feedback">Assigned to is valid!</div>
                             <div class="invalid-feedback">
                                 Minimum 5 characters required!
                             </div>
                         </div>
                         <div class="mb-3">
+                            <label for="newTaskStatus" class="form-label">Status</label>
+                            <select name="taskStatus" class="form-control" id="newTaskStatus"
+                                aria-describedby="inputGroupPrepend2" required>
+                                <option selected>In progress</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Done">Done</option>
+                                <div class="valid-feedback">Status is valid!</div>
+                                <div class="invalid-feedback">
+                                    Status cannot be empty!
+                                </div>
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label for="newTaskDueDate" class="form-label">Due Date</label>
-                            <input type="date" name="taskDueDate" class="form-control" id="newTaskDueDate" aria-describedby="inputGroupPrepend2" required />
+                            <input type="date" name="taskDueDate" class="form-control" id="newTaskDueDate"
+                                aria-describedby="inputGroupPrepend2" required />
                             <div class="valid-feedback">Task due date is valid!</div>
                             <div class="invalid-feedback">
                                 Date cannot be empty!
@@ -63,184 +84,191 @@
         </div>
     </div>
 
-    <div class="row d-flex justify-content-center container">
-        <div class="col-md-12">
-            <h3>My task planner</h3>
-            <span id="date-element"></span>
-        </div>
-
-        <div class="col-md-12">
-            <div class="card-hover-shadow-2x mb-3 card">
-                <div class="card-header-tab card-header">
-                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
-                        <i class="fa fa-tasks"></i>&nbsp;Task Lists
+    <div class="container">
+        <div class="row d-flex justify-content-md-center">
+            <div class="col-sm-5">
+                <h2 class="task-title">My task planner</h2>
+                <span class="task-title" id="date-element"></span>
+                <div class="card-hover-shadow-2x mb-3 card">
+                    <div class="card-header-tab card-header">
+                        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                            <i class="fa fa-tasks"></i>&nbsp;Task Lists
+                        </div>
+                    </div>
+                    <div style="position: static;" class="ps ps--active-y">
+                        <div class="ps-content">
+                            <ul class="list-group list-group-flush" id="task-list">
+                                <!-- <li class="list-group-item">
+                                    <div class="widget-content p-0">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left mr-2">
+                                                <div class="custom-checkbox custom-control">
+                                                    <input class="input" type="checkbox">
+                                                    <label class="label">&nbsp;</label>
+                                                </div>
+                                            </div>
+                                            <div class="widget-content-left">
+                                                <div class="widget-heading">
+                                                    Design your App Wireframes
+                                                </div>
+                                                <div class="widget-description">It is always a good practice to plan and
+                                                    design first before you start coding. The objective of this task is
+                                                    to
+                                                    create the Task Planner app wireframes!</div>
+                                                <div class="widget-subheading"><i>Assigned to: Jennifer Hoang</i></div>
+                                                <div class="widget-subheading"><i>Due date: 2022-01-28</i></div>
+                                            </div>
+                                            <div class="widget-content-right">
+                                                <div class="badge bg-success">Completed</div>
+                                                <!-- <button class="border-0 btn-transition btn btn-outline-success"
+                                                data-bs-toggle="modal" data-bs-target="#taskForm">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                                <button
+                                                    class="border-0 btn-transition btn btn-outline-success done-button">
+                                                    <i class="fa fa-check-circle done-button"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="widget-content p-0">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left mr-2">
+                                                <div class="custom-checkbox custom-control">
+                                                    <input class="input" type="checkbox">
+                                                    <label class="label">&nbsp;</label>
+                                                </div>
+                                            </div>
+                                            <div class="widget-content-left">
+                                                <div class="widget-heading">
+                                                    Implement your Wireframes using Bootstrap
+                                                </div>
+                                                <div class="widget-description">
+                                                    Implement the basic HTML structure of your Wireframes design.
+                                                </div>
+                                                <div class="widget-subheading"><i>Assigned to: Jennifer Hoang</i></div>
+                                                <div class="widget-subheading"><i>Due date: 2022-01-28</i></div>
+                                            </div>
+                                            <div class="widget-content-right">
+                                                <div class="badge bg-success">Completed</div>
+                                                <button class="border-0 btn-transition btn btn-outline-success"
+                                                    data-bs-toggle="modal" data-bs-target="#taskForm">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                                <button
+                                                    class="border-0 btn-transition btn btn-outline-success done-button">
+                                                    <i class="fa fa-check-circle done-button"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="widget-content p-0">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left mr-2">
+                                                <div class="custom-checkbox custom-control">
+                                                    <input class="input" type="checkbox">
+                                                    <label class="label">&nbsp;</label>
+                                                </div>
+                                            </div>
+                                            <div class="widget-content-left">
+                                                <div class="widget-heading">
+                                                    Create a Task Card layout and a Task List component
+                                                </div>
+                                                <div class="widget-description">Implement the card layout bootstrap
+                                                    component that contains the task information:</div>
+                                                <div class="widget-subheading"><i>Assigned to: Jennifer Hoang</i></div>
+                                                <div class="widget-subheading"><i>Due date: 2022-01-28</i></div>
+                                            </div>
+                                            <div class="widget-content-right">
+                                                <div class="badge bg-success">Completed</div>
+                                                <button class="border-0 btn-transition btn btn-outline-success"
+                                                    data-bs-toggle="modal" data-bs-target="#taskForm">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                                <button
+                                                    class="border-0 btn-transition btn btn-outline-success done-button">
+                                                    <i class="fa fa-check-circle done-button"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="widget-content p-0">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left mr-2">
+                                                <div class="custom-checkbox custom-control">
+                                                    <input class="input" type="checkbox">
+                                                    <label class="label">&nbsp;</label>
+                                                </div>
+                                            </div>
+                                            <div class="widget-content-left">
+                                                <div class="widget-heading">
+                                                    Task Form Inputs Validation
+                                                </div>
+                                                <div class="widget-description">Implement a form that captures the
+                                                    fields required to create a task.</div>
+                                                <div class="widget-subheading"><i>Assigned to: Jennifer Hoang</i></div>
+                                                <div class="widget-subheading"><i>Due date: 2022-01-28</i></div>
+                                            </div>
+                                            <div class="widget-content-right">
+                                                <div class="badge bg-info">In Progress</div>
+                                                <button class="border-0 btn-transition btn btn-outline-success"
+                                                    data-bs-toggle="modal" data-bs-target="#taskForm">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                                <button
+                                                    class="border-0 btn-transition btn btn-outline-success done-button">
+                                                    <i class="fa fa-check-circle done-button"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="widget-content p-0">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left mr-2">
+                                                <div class="custom-checkbox custom-control">
+                                                    <input class="input" type="checkbox">
+                                                    <label class="label">&nbsp;</label>
+                                                </div>
+                                            </div>
+                                            <div class="widget-content-left">
+                                                <div class="widget-heading">
+                                                    Adding Tasks
+                                                </div>
+                                                <div class="widget-description">For this task, we'll be adding the
+                                                    current date to be displayed on our To Do application using
+                                                    JavaScript's built-in Date object.</div>
+                                                <div class="widget-subheading"><i>Assigned to: Jennifer Hoang</i></div>
+                                                <div class="widget-subheading"><i>Due date: 2022-01-28</i></div>
+                                            </div>
+                                            <div class="widget-content-right">
+                                                <div class="badge bg-primary">Pending</div>
+                                                <button class="border-0 btn-transition btn btn-outline-success"
+                                                    data-bs-toggle="modal" data-bs-target="#taskForm">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                                <button class="border-0 btn-transition btn btn-outline-success">
+                                                    <i class="fa fa-check-circle done-button"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li> -->
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div style="position: static;" class="ps ps--active-y">
-                    <div class="ps-content">
-                        <ul class="list-group list-group-flush" id="task-list">
-                            <!-- <li class="list-group-item">
-                                <div class="widget-content p-0">
-                                    <div class="widget-content-wrapper">
-                                        <div class="widget-content-left mr-2">
-                                            <div class="custom-checkbox custom-control">
-                                                <input class="input" type="checkbox">
-                                                <label class="label">&nbsp;</label>
-                                            </div>
-                                        </div>
-                                        <div class="widget-content-left">
-                                            <div class="widget-heading">
-                                                Design your App Wireframes
-                                            </div>
-                                            <div class="widget-description">It is always a good practice to plan and
-                                                design first before you start coding. The objective of this task is to
-                                                create the Task Planner app wireframes!</div>
-                                            <div class="widget-subheading"><i>Assigned to: Jennifer Hoang</i></div>
-                                            <div class="widget-subheading"><i>Due date: 2022-01-28</i></div>
-                                        </div>
-                                        <div class="widget-content-right">
-                                            <div class="badge bg-success">Completed</div>
-                                            <button class="border-0 btn-transition btn btn-outline-success"
-                                                data-bs-toggle="modal" data-bs-target="#taskForm">
-                                                <i class="fa fa-pencil"></i>
-                                            </button>
-                                            <button class="border-0 btn-transition btn btn-outline-success done-button">
-                                                <i class="fa fa-check-circle done-button"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="widget-content p-0">
-                                    <div class="widget-content-wrapper">
-                                        <div class="widget-content-left mr-2">
-                                            <div class="custom-checkbox custom-control">
-                                                <input class="input" type="checkbox">
-                                                <label class="label">&nbsp;</label>
-                                            </div>
-                                        </div>
-                                        <div class="widget-content-left">
-                                            <div class="widget-heading">
-                                                Implement your Wireframes using Bootstrap
-                                            </div>
-                                            <div class="widget-description">
-                                                Implement the basic HTML structure of your Wireframes design.
-                                            </div>
-                                            <div class="widget-subheading"><i>Assigned to: Jennifer Hoang</i></div>
-                                            <div class="widget-subheading"><i>Due date: 2022-01-28</i></div>
-                                        </div>
-                                        <div class="widget-content-right">
-                                            <div class="badge bg-success">Completed</div>
-                                            <button class="border-0 btn-transition btn btn-outline-success"
-                                                data-bs-toggle="modal" data-bs-target="#taskForm">
-                                                <i class="fa fa-pencil"></i>
-                                            </button>
-                                            <button class="border-0 btn-transition btn btn-outline-success done-button">
-                                                <i class="fa fa-check-circle done-button"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="widget-content p-0">
-                                    <div class="widget-content-wrapper">
-                                        <div class="widget-content-left mr-2">
-                                            <div class="custom-checkbox custom-control">
-                                                <input class="input" type="checkbox">
-                                                <label class="label">&nbsp;</label>
-                                            </div>
-                                        </div>
-                                        <div class="widget-content-left">
-                                            <div class="widget-heading">
-                                                Create a Task Card layout and a Task List component
-                                            </div>
-                                            <div class="widget-description">Implement the card layout bootstrap component that contains the task information:</div>
-                                            <div class="widget-subheading"><i>Assigned to: Jennifer Hoang</i></div>
-                                            <div class="widget-subheading"><i>Due date: 2022-01-28</i></div>
-                                        </div>
-                                        <div class="widget-content-right">
-                                            <div class="badge bg-success">Completed</div>
-                                            <button class="border-0 btn-transition btn btn-outline-success"
-                                                data-bs-toggle="modal" data-bs-target="#taskForm">
-                                                <i class="fa fa-pencil"></i>
-                                            </button>
-                                            <button class="border-0 btn-transition btn btn-outline-success done-button">
-                                                <i class="fa fa-check-circle done-button"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="widget-content p-0">
-                                    <div class="widget-content-wrapper">
-                                        <div class="widget-content-left mr-2">
-                                            <div class="custom-checkbox custom-control">
-                                                <input class="input" type="checkbox">
-                                                <label class="label">&nbsp;</label>
-                                            </div>
-                                        </div>
-                                        <div class="widget-content-left">
-                                            <div class="widget-heading">
-                                                Task Form Inputs Validation
-                                            </div>
-                                            <div class="widget-description">Implement a form that captures the fields required to create a task.</div>
-                                            <div class="widget-subheading"><i>Assigned to: Jennifer Hoang</i></div>
-                                            <div class="widget-subheading"><i>Due date: 2022-01-28</i></div>
-                                        </div>
-                                        <div class="widget-content-right">
-                                            <div class="badge bg-info">In Progress</div>
-                                            <button class="border-0 btn-transition btn btn-outline-success"
-                                                data-bs-toggle="modal" data-bs-target="#taskForm">
-                                                <i class="fa fa-pencil"></i>
-                                            </button>
-                                            <button class="border-0 btn-transition btn btn-outline-success done-button">
-                                                <i class="fa fa-check-circle done-button"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="widget-content p-0">
-                                    <div class="widget-content-wrapper">
-                                        <div class="widget-content-left mr-2">
-                                            <div class="custom-checkbox custom-control">
-                                                <input class="input" type="checkbox">
-                                                <label class="label">&nbsp;</label>
-                                            </div>
-                                        </div>
-                                        <div class="widget-content-left">
-                                            <div class="widget-heading">
-                                                Adding Tasks
-                                            </div>
-                                            <div class="widget-description">For this task, we'll be adding the current date to be displayed on our To Do application using JavaScript's built-in Date object.</div>
-                                            <div class="widget-subheading"><i>Assigned to: Jennifer Hoang</i></div>
-                                            <div class="widget-subheading"><i>Due date: 2022-01-28</i></div>
-                                        </div>
-                                        <div class="widget-content-right">
-                                            <div class="badge bg-primary">Pending</div>
-                                            <button class="border-0 btn-transition btn btn-outline-success"
-                                                data-bs-toggle="modal" data-bs-target="#taskForm">
-                                                <i class="fa fa-pencil"></i>
-                                            </button>
-                                            <button class="border-0 btn-transition btn btn-outline-success">
-                                                <i class="fa fa-check-circle done-button"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li> -->
-                        </ul>
-                    </div>
+                <div class="card-footer mx-auto justify-content-right">
+                    <button class="btn btn-primary btn-sm" id="addTask" data-bs-toggle="modal"
+                        data-bs-target="#taskForm">Add New Task</button>
                 </div>
-            </div>
-            <div class="card-footer mx-auto justify-content-right">
-                <button class="btn btn-primary btn-sm float-right" id="addTask" data-bs-toggle="modal"
-                    data-bs-target="#taskForm">Add New Task</button>
-                <button class="btn btn-danger btn-sm float-right" id="deleteTasks">Delete Tasks</button>
             </div>
         </div>
     </div>
